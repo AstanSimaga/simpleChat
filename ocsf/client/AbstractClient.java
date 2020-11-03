@@ -268,6 +268,10 @@ public abstract class AbstractClient implements Runnable {
 	 * attempting to reconnect.
 	 */
 	protected void connectionClosed() {
+
+		System.out.println("The connection was successfully closed");
+
+
 	}
 
 	/**
@@ -279,6 +283,8 @@ public abstract class AbstractClient implements Runnable {
 	 *            the exception raised.
 	 */
 	protected void connectionException(Exception exception) {
+		System.out.println(exception);
+
 	}
 
 	/**
