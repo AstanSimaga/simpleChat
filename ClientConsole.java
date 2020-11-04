@@ -50,12 +50,12 @@ public class ClientConsole implements ChatIF
    * @param host The host to connect to.
    * @param port The port to connect on.
    */
-  public ClientConsole(String host, int port) 
+  public ClientConsole(String host, int port)
   {
     try 
     {
       client= new ChatClient(host, port, this);
-      
+
       
     } 
     catch(IOException exception) 
@@ -64,9 +64,14 @@ public class ClientConsole implements ChatIF
                 + " Terminating client.");
       System.exit(1);
     }
-    
     // Create scanner object to read from console
     fromConsole = new Scanner(System.in); 
+  }
+
+  protected void connectionClosed() {
+
+    System.out.println("The server stopped: connection was successfully closed.");
+
   }
 
   
@@ -82,8 +87,9 @@ public class ClientConsole implements ChatIF
     {
 
       String message;
+      boolean serverConnected = true;
 
-      while (true) 
+      while (serverConnected)
       {
         message = fromConsole.nextLine();
         client.handleMessageFromClientUI(message);
@@ -114,21 +120,25 @@ public class ClientConsole implements ChatIF
    * This method is responsible for the creation of the Client UI.
    *
    * @param args[0] The host to connect to.
+   * @param args[1] The host to connect to.
    */
   public static void main(String[] args) 
   {
     String host = "";
-
+    int port;
 
     try
     {
       host = args[0];
+      port = Integer.parseInt(args[1]);
     }
     catch(ArrayIndexOutOfBoundsException e)
     {
       host = "localhost";
+      port = DEFAULT_PORT;
     }
-    ClientConsole chat= new ClientConsole(host, DEFAULT_PORT);
+    ClientConsole chat= new ClientConsole(host, port);
+
     chat.accept();  //Wait for console data
   }
 }

@@ -375,7 +375,8 @@ public abstract class AbstractServer implements Runnable
    * @param client the connection with the client.
    */
   synchronized protected void clientDisconnected(
-    ConnectionToClient client) {}
+    ConnectionToClient client) {
+  }
 
   /**
    * Hook method called each time an exception is thrown in a

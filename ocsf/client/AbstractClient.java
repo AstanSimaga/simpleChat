@@ -157,7 +157,6 @@ public abstract class AbstractClient implements Runnable {
 	final public void closeConnection() throws IOException {
 		// Prevent the thread from looping any more
 		readyToStop = true;
-
 		try {
 			closeAll();
 		} finally {
@@ -227,6 +226,7 @@ public abstract class AbstractClient implements Runnable {
 	 * <code>handleMessageFromServer()</code>. Not to be explicitly called.
 	 */
 	final public void run() {
+
 		connectionEstablished();
 
 		// The message from the server
@@ -267,12 +267,7 @@ public abstract class AbstractClient implements Runnable {
 	 * perform special processing such as cleaning up and terminating, or
 	 * attempting to reconnect.
 	 */
-	protected void connectionClosed() {
-
-		System.out.println("The connection was successfully closed");
-
-
-	}
+	protected void connectionClosed() {}
 
 	/**
 	 * Hook method called each time an exception is thrown by the client's
@@ -282,18 +277,14 @@ public abstract class AbstractClient implements Runnable {
 	 * @param exception
 	 *            the exception raised.
 	 */
-	protected void connectionException(Exception exception) {
-		System.out.println(exception);
-
-	}
+	protected void connectionException(Exception exception) {}
 
 	/**
 	 * Hook method called after a connection has been established. The default
 	 * implementation does nothing. It may be overridden by subclasses to do
 	 * anything they wish.
 	 */
-	protected void connectionEstablished() {
-	}
+	protected void connectionEstablished() {}
 
 	/**
 	 * Handles a message sent from the server to this client. This MUST be

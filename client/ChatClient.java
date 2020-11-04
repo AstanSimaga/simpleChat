@@ -48,7 +48,20 @@ public class ChatClient extends AbstractClient
 
   
   //Instance methods ************************************************
-    
+
+  protected void connectionClosed() {
+    System.out.println("The server stopped: connection was successfully closed.");
+  }
+
+  protected void connectionException(Exception exception) {
+    System.out.println(exception);
+  }
+
+  protected void connectionEstablished() {
+    System.out.println("The connection was successfully established.");
+  }
+
+
   /**
    * This method handles all data that comes in from the server.
    *
@@ -68,7 +81,8 @@ public class ChatClient extends AbstractClient
   {
     try
     {
-      sendToServer(message);
+        sendToServer(message);
+
     }
     catch(IOException e)
     {
