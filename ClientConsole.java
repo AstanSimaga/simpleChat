@@ -68,12 +68,6 @@ public class ClientConsole implements ChatIF
     fromConsole = new Scanner(System.in); 
   }
 
-  protected void connectionClosed() {
-
-    System.out.println("The server stopped: connection was successfully closed.");
-
-  }
-
   
   //Instance methods ************************************************
   

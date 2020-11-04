@@ -45,6 +45,7 @@ public class EchoServer extends AbstractServer
    * @param msg The message received from the client.
    * @param client The connection from which the message originated.
    */
+
   public void handleMessageFromClient (Object msg, ConnectionToClient client)
   {
     System.out.println("Message received: " + msg + " from " + client);
@@ -67,32 +68,35 @@ public class EchoServer extends AbstractServer
    */
   protected void serverStopped()
   {
-    System.out.println
-      ("Server has stopped listening for connections.");
+    System.out.println ("Server has stopped listening for connections.");
+
   }
   protected void serverClosed() {
-    System.out.println
-            ("Server was closed.");
+
+    System.out.println("Server was closed.");
+
   }
 
   protected void clientConnected(ConnectionToClient client) {
-    System.out.println
-            ("Client " + client.getName() +" connected.");
-  }
-  synchronized protected void clientDisconnected(
-          ConnectionToClient client) {
 
-    System.out.println
-            ("Client " + client.getName() +" disconnected.");
+    System.out.println("Client " + client.getName() +" connected.");
   }
+
+  synchronized protected void clientDisconnected(ConnectionToClient client) {
+
+    System.out.println("Client " + client.getName() +" disconnected.");
+
+    //sendToAllClients("Client " + client.getName() +" disconnected.");
+
+  }
+
   protected void listeningException(Throwable exception) {
     System.out.println(exception);
 
   }
 
-  synchronized protected void clientException(
-          ConnectionToClient client, Throwable exception) {
-    System.out.println(exception);
+  synchronized protected void clientException(ConnectionToClient client, Throwable exception) {
+    clientDisconnected(client);
   }
   
   //Class methods ***************************************************
@@ -101,7 +105,7 @@ public class EchoServer extends AbstractServer
    * This method is responsible for the creation of 
    * the server instance (there is no UI in this phase).
    *
-   * @param args[0] The port number to listen on.  Defaults to 5555 
+   * @param //args[0] The port number to listen on.  Defaults to 5555
    *          if no argument is entered.
    */
   public static void main(String[] args) 
@@ -116,6 +120,7 @@ public class EchoServer extends AbstractServer
     {
       port = DEFAULT_PORT; //Set port to 5555
     }
+
 	
     EchoServer sv = new EchoServer(port);
     

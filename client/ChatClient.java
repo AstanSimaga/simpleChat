@@ -50,11 +50,17 @@ public class ChatClient extends AbstractClient
   //Instance methods ************************************************
 
   protected void connectionClosed() {
-    System.out.println("The server stopped: connection was successfully closed.");
+    if (isConnected()) {
+      System.out.println("The connection was closed.");
+    }
+    else{
+      System.out.println("The server stopped: connection was successfully closed.");
+    }
   }
 
   protected void connectionException(Exception exception) {
     System.out.println(exception);
+    quit();
   }
 
   protected void connectionEstablished() {
@@ -81,8 +87,36 @@ public class ChatClient extends AbstractClient
   {
     try
     {
-        sendToServer(message);
+      if(message.contains("#")) {
+        switch (message) {
+          case "#quit":
+            quit();
+            break;
+          case "#logoff":
+            closeConnection();
 
+            break;
+          case "#sethost":
+            break;
+          case "#setport":
+            break;
+          case "#login":
+            openConnection();
+
+            break;
+          case "#gethost":
+            sendToServer(getHost());
+            break;
+          case "#getport":
+            sendToServer(getPort());
+            break;
+          default:
+            sendToServer(message);
+        }
+      }
+      else {
+        sendToServer(message);
+      }
     }
     catch(IOException e)
     {
