@@ -125,7 +125,6 @@ public class ChatClient extends AbstractClient
             if(!isConnected()){
               try {
                 setPort(Integer.parseInt(consoleInput[1]));
-
                 clientUI.display("New client connected via port " + consoleInput[1]);
               }catch (Exception e){
                 System.out.println(e);

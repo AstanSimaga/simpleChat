@@ -191,13 +191,14 @@ public abstract class AbstractServer implements Runnable
    */
   public void sendToAllClients(Object msg)
   {
+    String toSend = (String) msg;
     Thread[] clientThreadList = getClientConnections();
 
     for (int i=0; i<clientThreadList.length; i++)
     {
       try
       {
-        ((ConnectionToClient)clientThreadList[i]).sendToClient(msg);
+        ((ConnectionToClient)clientThreadList[i]).sendToClient(toSend);
       }
       catch (Exception ex) {}
     }
@@ -303,6 +304,7 @@ public abstract class AbstractServer implements Runnable
    * Runs the listening thread that allows clients to connect.
    * Not to be called.
    */
+
   final public void run()
   {
     // call the hook method to notify that the server is starting
@@ -384,7 +386,7 @@ public abstract class AbstractServer implements Runnable
    * synchronized.
    *
    * @param client the client that raised the exception.
-   * @param Throwable the exception thrown.
+   * @param //Throwable the exception thrown.
    */
   synchronized protected void clientException(
     ConnectionToClient client, Throwable exception) {}
