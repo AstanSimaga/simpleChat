@@ -51,15 +51,15 @@ public class ChatClient extends AbstractClient
 
   protected void connectionClosed() {
     if (isConnected()) {
-      System.out.println("The connection was closed.");
+      System.out.println("The client disconnected.");
     }
     else{
-      System.out.println("The server stopped: connection was successfully closed.");
+      System.out.println("The client program was terminated.");
     }
   }
 
   protected void connectionException(Exception exception) {
-    System.out.println(exception);
+    System.out.println("The server program was terminated.");
     quit();
   }
 
@@ -85,38 +85,81 @@ public class ChatClient extends AbstractClient
    */
   public void handleMessageFromClientUI(String message)
   {
+    String[] consoleInput = message.split(" ");
     try
     {
-      if(message.contains("#")) {
-        switch (message) {
+      if(consoleInput[0].contains("#")) {
+        switch (consoleInput[0]) {
+
           case "#quit":
-            quit();
+            try {
+              quit();
+            }catch (Exception e){
+              System.out.println(e);
+            }
             break;
+
           case "#logoff":
-            closeConnection();
-
+            try {
+              closeConnection();
+            }catch (Exception e){
+              System.out.println(e);
+            }
             break;
+
           case "#sethost":
+            if(!isConnected()){
+              try {
+                setHost(consoleInput[1]);
+                clientUI.display("New client host name was set as " + consoleInput[1]);
+              }catch (Exception e){
+                System.out.println(e);
+              }
+            }
+            else {
+              clientUI.display("Client is still connected, cannot change host name yet.");
+            }
             break;
+
           case "#setport":
+            if(!isConnected()){
+              try {
+                setPort(Integer.parseInt(consoleInput[1]));
+
+                clientUI.display("New client connected via port " + consoleInput[1]);
+              }catch (Exception e){
+                System.out.println(e);
+              }
+            }
+            else {
+              clientUI.display("Client is still connected, cannot change port number yet.");
+            }
             break;
+
           case "#login":
-            openConnection();
+            try {
+              openConnection();
+            }
+            catch (Exception e){
+              System.out.println(e);
+            }
+            break;
+
+          case "#gethost":
+            sendToServer("The present host name is " + getHost());
 
             break;
-          case "#gethost":
-            sendToServer(getHost());
-            break;
+
           case "#getport":
-            sendToServer(getPort());
+            sendToServer("The present client port is " + getPort());
             break;
-          default:
-            sendToServer(message);
         }
       }
+
       else {
         sendToServer(message);
       }
+
     }
     catch(IOException e)
     {
