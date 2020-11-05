@@ -127,7 +127,6 @@ public class ChatServer extends AbstractServer {
                     case "#stop":
                         try {
                             stopListening();
-                            serverStopped();
                         } catch (Exception e) {
                             System.out.println(e);
                         }
@@ -151,21 +150,20 @@ public class ChatServer extends AbstractServer {
                                 System.out.println(e);
                             }
                         } else {
-                            serverUI.display("Server is still connected, cannot change port number yet.");
+                            System.out.println("Server is still connected, cannot change port number yet.");
                         }
                         break;
 
                     case "#start":
                         try {
                             listen();
-                            serverStarted();
                         } catch (Exception e) {
                             System.out.println(e);
                         }
                         break;
 
                     case "#getport":
-                        serverUI.display("The present host name is " + super.getPort());
+                        System.out.println("The present port number is " + super.getPort());
                         break;
                 }
             } else {
